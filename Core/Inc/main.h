@@ -52,6 +52,8 @@ extern "C" {
 
 /* USER CODE END EM */
 
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -72,8 +74,6 @@ void Error_Handler(void);
 #define ADC_CH1_GPIO_Port GPIOA
 #define ADC_CH2_Pin GPIO_PIN_4
 #define ADC_CH2_GPIO_Port GPIOA
-#define PWM_PIN_Pin GPIO_PIN_7
-#define PWM_PIN_GPIO_Port GPIOC
 #define SWDIO_Pin GPIO_PIN_13
 #define SWDIO_GPIO_Port GPIOA
 #define SWCLK_Pin GPIO_PIN_14
