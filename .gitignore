@@ -1,3 +1,7 @@
+#settings and metadata
+.settings/
+.metadata/
+
 # Prerequisites
 *.d
 
@@ -6,6 +10,10 @@
 *.lo
 *.o
 *.obj
+*.elf
+*.hex
+*.bin
+*.a
 
 # Precompiled Headers
 *.gch
@@ -13,9 +21,11 @@
 
 # Linker files
 *.ilk
+*.map
 
 # Debugger Files
 *.pdb
+*.launch
 
 # Compiled Dynamic libraries
 *.so
