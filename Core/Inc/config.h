@@ -1,0 +1,64 @@
+/**
+  * Created on: Jun 7, 2026
+  * Author: Bailey Quill
+  ******************************************************************************
+  * @file           : config.h
+  * @brief          : project level configs
+  ******************************************************************************
+  * @attention
+  *
+  * TODO: license/ copyright
+  *
+  ******************************************************************************
+  */
+
+#ifndef CORE_INC_CONFIG_H_
+#define CORE_INC_CONFIG_H_
+
+/* Includes ------------------------------------------------------------------*/
+#include <stdint.h> /* uintx_t types */
+
+/* Versioning ----------------------------------------------------------------*/
+
+/* usefull for ensuring test builds/ unrealeased versions don't leave engineering */
+const uint8_t VARIANT_DEBUG_MASK = 0x80;
+
+/* allows variant builds to both be easily identified and not require mutually exclusive ver# */
+typedef enum : uint8_t {
+	/*reaserved debug mask = 0x80*/
+	/*variant_   = 0x70,*/	
+	/*variant_   = 0x60,*/	
+	/*variant_   = 0x50,*/	
+	/*variant_   = 0x40,*/	
+	/*variant_   = 0x30,*/	
+	/*variant_   = 0x20,*/
+	/*variant_   = 0x10,*/
+	/*variant_   = 0x08,*/	
+	/*variant_   = 0x07,*/	
+	/*variant_   = 0x06,*/	
+	/*variant_   = 0x05,*/	
+	/*variant_   = 0x04,*/	
+	/*variant_   = 0x03,*/	
+	/*variant_   = 0x02,*/	
+	variant_main = 0x01	
+}Variants;
+
+typedef struct {
+	Variants variant;
+	uint16_t major;
+	uint16_t minor;
+	uint16_t build;
+} Version;
+
+/* version info placed at head of build to make it easy to verify build info
+ * leading 0xDEADBEEF for quick search */
+volatile const uint32_t version_search_header __attribute__((section(".versioning"))) = 0xDEADBEEF;
+volatile const Version VERSION_INFO __attribute__((section(".versioning"))) = {
+	.variant = variant_main, /* TODO: get these taking compile flags/ setup build script or bake variant versions in #ifdefs */
+	.major   = 0x00,
+	.minor   = 0x00,
+	.build   = 0x00
+};
+
+
+#endif /* CORE_INC_CONFIG_H_ */

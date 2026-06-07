@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "config.h" /* project level configs like versioning etc */
 
 /* USER CODE END Includes */
 

@@ -77,6 +77,14 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
+  /* The build version information */
+  .versioning :
+  {
+    . = ALIGN(4);
+    *(.versioning)
+    KEEP (*(.versioning))
+    . = ALIGN(4);  
+  } >FLASH
   /* The program code and other data goes into FLASH */
   .text :
   {
