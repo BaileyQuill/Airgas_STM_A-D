@@ -6,6 +6,7 @@ MVP
 documentation of setup 
 build script (debug/ realease)~?
 	May move out of MVP and manually change #defines or flags for version numbers/ variantId.
+	was passing flags in during cmake config step but was missing context for compiler. stashed and lowering priorty for now.
 LED service/ object
 debounce service/ object
 version numbers

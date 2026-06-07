@@ -17,8 +17,29 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h> /* uintx_t types */
+#include <stdbool.h> /* bools 'un-needed' but makes it a little easier to read */
 
 /* Versioning ----------------------------------------------------------------*/
+/* TODO: make build script/ cmake pass in version info bassed on tags/ branch name */
+#ifndef BUILD_VER_DEBUG
+#define BUILD_VER_DEBUG   true
+#endif
+
+#ifndef BUILD_VER_VARIANT
+#define BUILD_VER_VARIANT variant_main 
+#endif
+
+#ifndef BUILD_VER_MAJOR
+#define BUILD_VER_MAJOR   0
+#endif
+
+#ifndef BUILD_VER_MINOR
+#define BUILD_VER_MINOR   0
+#endif
+
+#ifndef BUILD_VER_BUILD
+#define BUILD_VER_BUILD   0
+#endif
 
 /* usefull for ensuring test builds/ unrealeased versions don't leave engineering */
 const uint8_t VARIANT_DEBUG_MASK = 0x80;
@@ -55,10 +76,11 @@ typedef struct {
 volatile const uint16_t version_search_header_MSW __attribute__((section(".versioning"))) = 0xDEAD;
 volatile const uint16_t version_search_header_LSW __attribute__((section(".versioning"))) = 0xBEEF;
 volatile const Version VERSION_INFO __attribute__((section(".versioning"))) = {
-	.variant = variant_main | VARIANT_DEBUG_MASK, /* TODO: get these taking compile flags/ setup build script or bake variant versions in #ifdefs */
-	.major   = 0x00,
-	.minor   = 0x00,
-	.build   = 0x00
+	/* build variant id bitwise or'd with the debug flag if BUILD_VER_DEBUG is non zero */ 
+	.variant = BUILD_VER_VARIANT | (BUILD_VER_DEBUG) ? VARIANT_DEBUG_MASK : 0x00,
+	.major   = BUILD_VER_MAJOR,
+	.minor   = BUILD_VER_MINOR,
+	.build   = BUILD_VER_BUILD
 };
 
 
