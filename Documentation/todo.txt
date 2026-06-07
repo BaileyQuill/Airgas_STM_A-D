@@ -1,0 +1,34 @@
+req's
+3.a - A/D w PWM: which PWM pin
+	when not above threshold/ what is the default states desired behaviour
+
+MVP
+documentation of setup 
+build script (debug/ realease)~?
+	May move out of MVP and manually change #defines or flags for version numbers/ variantId.
+LED service/ object
+debounce service/ object
+version numbers
+build id, or branch id? 
+	uuid for different variants, keeps builds/ ver# not jank arcoss the different branches.
+	for combined build, param that is checked on boot to determin behaviour
+unit tests~?
+	deffinitly for the main state machines, my logic an doesn't do analog :,(
+	interface will ether need gpio passed in (constructer or flash params if I get the time)
+		and/ or #define macros 
+	just use old script i have (somewhere) for making/ running cmake tests in subfolders. k.i.s.s.
+Watchdog
+	It's important in production, so i should. also is a quick add so might aswell.
+	don't need to save off state.
+branch, make the main state machines/ services, build and tag 
+
+
+less fun things i could do if i get time
+draw up some form of a test plan for high level behaviour
+	/ things that wouldn't be caught by existing unit tests
+
+Fun things if i get time
+set my server back up and get a runner going for ci/cd pipeline
+combined build (could use jumper or param check on boot)
+flash params (assuming i can write to the flash)
+some form of console/ commanding. a way to write paramaters.
