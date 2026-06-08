@@ -2,8 +2,8 @@
   * Created on: Jun 7, 2026
   * Author: Bailey Quill
   ******************************************************************************
-  * @file           : sftw_pwm.h
-  * @brief          : software/ service based pwm
+  * @file           : sftw_timer.h
+  * @brief          : software/ service based timer
   ******************************************************************************
   * @attention
   *
