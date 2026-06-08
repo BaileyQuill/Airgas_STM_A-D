@@ -57,5 +57,12 @@ void DisableSftwPwm(SftwPwm_t *sftwPwm);
  */
 void UpdateSftwPwm(SftwPwm_t *sftwPwm, uint32_t period);
 
+/** @brief services the SftwPwm, changing gpio state when the timers up.
+ * @param *sftwPwm pointer to the software pwm
+ *
+ * @return void
+ */
+void ServiceSftwPwm(SftwPwm_t *sftwPwm);
+
 
 #endif /* CORE_INC_SFTW_PWM_H_ */
