@@ -69,13 +69,13 @@ typedef struct {
 	uint16_t major;
 	uint16_t minor;
 	uint16_t build;
-} Version;
+} Version_t;
 
 /* version info placed at head of build to make it easy to verify build info
  * leading 0xDEADBEEF for quick search, split words as build seems to be LSW (DEAD and BEEF were swapped in hexdump)*/
 volatile const uint16_t version_search_header_MSW __attribute__((section(".versioning"))) = 0xDEAD;
 volatile const uint16_t version_search_header_LSW __attribute__((section(".versioning"))) = 0xBEEF;
-volatile const Version VERSION_INFO __attribute__((section(".versioning"))) = {
+volatile const Version_t VERSION_INFO __attribute__((section(".versioning"))) = {
 	/* build variant id bitwise or'd with the debug flag if BUILD_VER_DEBUG is non zero */ 
 	.variant = BUILD_VER_VARIANT | (BUILD_VER_DEBUG) ? VARIANT_DEBUG_MASK : 0x00,
 	.major   = BUILD_VER_MAJOR,
