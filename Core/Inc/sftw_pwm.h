@@ -32,7 +32,7 @@ typedef struct {
  * @param uint16_t      gpio_pin
  * @return SftwPwm_t 'object'
  */
-SftwPwm_t SftwPwm(SftwPwm_t *sftwPwm);
+SftwPwm_t SftwPwm(GPIO_TypeDef *gpiox, uint16_t gpio_pin);
 
 /** @brief starts the SftwTimer to start driving the SftwPwm
  *    gpio starts high

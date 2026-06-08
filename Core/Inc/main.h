@@ -74,10 +74,14 @@ void Error_Handler(void);
 #define ADC_CH1_GPIO_Port GPIOA
 #define ADC_CH2_Pin GPIO_PIN_4
 #define ADC_CH2_GPIO_Port GPIOA
+#define LD1_GREEN_Pin GPIO_PIN_5
+#define LD1_GREEN_GPIO_Port GPIOA
 #define SWDIO_Pin GPIO_PIN_13
 #define SWDIO_GPIO_Port GPIOA
 #define SWCLK_Pin GPIO_PIN_14
 #define SWCLK_GPIO_Port GPIOA
+#define LD2_BLUE_Pin GPIO_PIN_9
+#define LD2_BLUE_GPIO_Port GPIOC
 
 /* USER CODE BEGIN Private defines */
 

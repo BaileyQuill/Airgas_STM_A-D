@@ -12,8 +12,8 @@
   ******************************************************************************
   */
 
-#ifndef CORE_INC_SFTW_PWM_H_
-#define CORE_INC_SFTW_PWM_H_
+#ifndef CORE_INC_SFTW_TIMER_H_
+#define CORE_INC_SFTW_TIMER_H_
 
 #include <main.h> /* for chip specific hal drivers */
 #include <stdbool.h>
@@ -28,8 +28,15 @@ typedef enum {
 typedef struct {
 	uint32_t        timeToFire; /* uptime in ms when the timer will fire again */
 	uint32_t        period;     /* time in ms to increment timeToFire by for repeate timers */
-	SftwTimer_modes current_mode;
+	SftwTimer_modes currentMode;
 } SftwTimer_t;
+
+/* default period set to 3141 ms as it's an easy and specific number to catch if app doesn't update it */
+#define DEFAULT_SFTW_TIMER (SftwTimer_t) {                  \
+                            .timeToFire     = 0,            \
+                            .period         = 3141,         \
+                            .currentMode    = st_disabled   \
+                            }
 
 /** @brief Checks weather the supplied timer is firing
  *   timers in st_periodic mode will increment their next time to fire when returning true.

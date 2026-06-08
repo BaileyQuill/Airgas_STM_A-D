@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "config.h" /* project level configs like versioning etc */
+#include "sftw_pwm.h"
 
 /* USER CODE END Includes */
 
@@ -100,10 +101,6 @@ int main(void)
 
   /* USER CODE END 2 */
 
-  /* Initialize leds */
-  BSP_LED_Init(LED_GREEN);
-  BSP_LED_Init(LED_BLUE);
-
   /* Initialize USER push-button, will be used to trigger an interrupt each time it's pressed.*/
   BSP_PB_Init(BUTTON_USER, BUTTON_MODE_EXTI);
 
@@ -120,12 +117,17 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  /* I set things up to just use gpio port/ pin with the Hal functions. didn't relize the built in LEDS were treated differently and only exposed their port/ pin in the .c file
+   * TODO: some slight issues with the gpio setup for the LEDS. They seem to start on and then aren't as bright when driven afterwards */
+  SftwPwm_t testLed = SftwPwm(LD1_GREEN_GPIO_Port, LD1_GREEN_Pin);
+  UpdateSftwPwm(&testLed, (uint32_t) 1000);
+  EnableSftwPwm(&testLed);
   while (1)
   {
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+      ServiceSftwPwm(&testLed);
   }
   /* USER CODE END 3 */
 }
@@ -299,6 +301,7 @@ static void MX_TIM2_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
   /* USER CODE BEGIN MX_GPIO_Init_1 */
 
   /* USER CODE END MX_GPIO_Init_1 */
@@ -307,6 +310,26 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LD1_GREEN_GPIO_Port, LD1_GREEN_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LD2_BLUE_GPIO_Port, LD2_BLUE_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : LD1_GREEN_Pin */
+  GPIO_InitStruct.Pin = LD1_GREEN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LD1_GREEN_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : LD2_BLUE_Pin */
+  GPIO_InitStruct.Pin = LD2_BLUE_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LD2_BLUE_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
