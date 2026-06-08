@@ -19,12 +19,14 @@
  * @param uint16_t      gpio_pin
  * @return SftwPwm_t 'object'
  */
-SftwPwm_t SftwPwm(GPIO_TypeDef *gpiox, uint16_t gpio_pin){
+SftwPwm_t SftwPwm(GPIO_TypeDef *gpiox, uint16_t gpio_pin, bool activeHigh){
     SftwPwm_t sftwPwm = {
-            .gpiox = gpiox,
-            .gpio_pin = gpio_pin,
-            .currentState = GPIO_PIN_RESET,
-            .timer = DEFAULT_SFTW_TIMER
+            .gpiox          = gpiox,
+            .gpio_pin       = gpio_pin,
+            /* set currentState to off based on activeHigh */
+            .currentState   = (activeHigh) ? GPIO_PIN_RESET : GPIO_PIN_SET,
+            .timer          = DEFAULT_SFTW_TIMER,
+            .activeHigh     = activeHigh
     };
     /* ensure non floating/ on gpio */
     HAL_GPIO_WritePin(sftwPwm.gpiox, sftwPwm.gpio_pin, sftwPwm.currentState);
@@ -43,8 +45,8 @@ void EnableSftwPwm(SftwPwm_t *sftwPwm){
     ResetTimer(&sftwPwm->timer);
     /* update mode from single fire to periodic */
     sftwPwm->timer.currentMode  = st_periodic;
-    /* start gpio high */
-    sftwPwm->currentState       = GPIO_PIN_SET;
+    /* set currentState to on based on activeHigh */
+    sftwPwm->currentState   = (sftwPwm->activeHigh) ? GPIO_PIN_SET : GPIO_PIN_RESET;
     HAL_GPIO_WritePin(sftwPwm->gpiox, sftwPwm->gpio_pin, sftwPwm->currentState);
 };
 
@@ -56,8 +58,8 @@ void EnableSftwPwm(SftwPwm_t *sftwPwm){
 void DisableSftwPwm(SftwPwm_t *sftwPwm){
     /* disable timer */
     sftwPwm->timer.currentMode  = st_disabled;
-    /* drive gpio low */
-    sftwPwm->currentState       = GPIO_PIN_RESET;
+    /* set currentState to off based on activeHigh */
+    sftwPwm->currentState   = (sftwPwm->activeHigh) ? GPIO_PIN_RESET : GPIO_PIN_SET;
     HAL_GPIO_WritePin(sftwPwm->gpiox, sftwPwm->gpio_pin, sftwPwm->currentState);
 };
 

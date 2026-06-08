@@ -119,15 +119,19 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   /* I set things up to just use gpio port/ pin with the Hal functions. didn't relize the built in LEDS were treated differently and only exposed their port/ pin in the .c file
    * TODO: some slight issues with the gpio setup for the LEDS. They seem to start on and then aren't as bright when driven afterwards */
-  SftwPwm_t testLed = SftwPwm(LD1_GREEN_GPIO_Port, LD1_GREEN_Pin);
-  UpdateSftwPwm(&testLed, (uint32_t) 1000);
-  EnableSftwPwm(&testLed);
+  SftwPwm_t testLed1 = SftwPwm(LD1_GREEN_GPIO_Port, LD1_GREEN_Pin, true);
+  SftwPwm_t testLed2 = SftwPwm(LD2_BLUE_GPIO_Port,  LD2_BLUE_Pin,  false);
+  UpdateSftwPwm(&testLed1, (uint32_t) 1000);
+  UpdateSftwPwm(&testLed2, (uint32_t) 2000);
+//  EnableSftwPwm(&testLed1);
+//  EnableSftwPwm(&testLed2);
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-      ServiceSftwPwm(&testLed);
+      ServiceSftwPwm(&testLed1);
+      ServiceSftwPwm(&testLed2);
   }
   /* USER CODE END 3 */
 }
@@ -321,14 +325,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = LD1_GREEN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   HAL_GPIO_Init(LD1_GREEN_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : LD2_BLUE_Pin */
   GPIO_InitStruct.Pin = LD2_BLUE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   HAL_GPIO_Init(LD2_BLUE_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */

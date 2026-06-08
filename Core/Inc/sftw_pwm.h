@@ -16,6 +16,7 @@
 #define CORE_INC_SFTW_PWM_H_
 
 #include <main.h> /* for chip specific hal drivers */
+#include <stdbool.h>
 #include "sftw_timer.h"
 
 typedef struct {
@@ -25,14 +26,17 @@ typedef struct {
 	uint16_t      gpio_pin;
 	GPIO_PinState currentState;
 	SftwTimer_t   timer;
+	bool          activeHigh; /* true if GPIO_PIN_SET is on, otherwise false*/
 } SftwPwm_t;
 
 /** @brief 'initializer' for SftwPwm_t 'object'
  * @param GPIO_TypeDef *gpiox
  * @param uint16_t      gpio_pin
+ * @param bool activeHigh true if driving the gpio high (GPIO_PIN_SET) is on.
+ *          false if driving the gpio low (GPIO_PIN_RESET) is on.
  * @return SftwPwm_t 'object'
  */
-SftwPwm_t SftwPwm(GPIO_TypeDef *gpiox, uint16_t gpio_pin);
+SftwPwm_t SftwPwm(GPIO_TypeDef *gpiox, uint16_t gpio_pin, bool activeHigh);
 
 /** @brief starts the SftwTimer to start driving the SftwPwm
  *    gpio starts high
