@@ -47,7 +47,7 @@ bool TimerUp (SftwTimer_t *timer) {
 void ResetTimer (SftwTimer_t *timer){
     timer->timeToFire = HAL_GetTick() + timer->period;
     if (timer->currentMode == st_disabled) {
-        timer->currentMode == st_singleFire;
+        timer->currentMode = st_singleFire;
     }
 };
 
