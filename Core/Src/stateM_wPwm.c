@@ -24,6 +24,8 @@
  * so macros. long rant for "I don't like stms interface, but also I already burnt enough time down that rabbit hole"
  */
 #define GRAB_BUTTON_STATE BSP_PB_GetState(BUTTON_USER)
+#define BUTTON_PRESSED  (BSP_PB_GetState(BUTTON_USER) != GPIO_PIN_SET  )
+#define BUTTON_RELEASED (BSP_PB_GetState(BUTTON_USER) != GPIO_PIN_RESET)
 
 /* thresholds in volts */
 #define PWM_STATE_LOW_2_HIGH_THRESH_V 2.5
@@ -74,7 +76,7 @@ void ServiceState_wPwm (ADC_HandleTypeDef *adc_ch, SftwPwm_t *statusLed) {
             break;
 
         case bd_off:
-            if ( GRAB_BUTTON_STATE == GPIO_PIN_SET ) {
+            if ( BUTTON_PRESSED ) {
                 sftwTimer.period = BUTTON_DB_OFF_2_ON_MS;
                 ResetTimer(&sftwTimer);
                 buttonState = bd_off2on;
@@ -82,7 +84,7 @@ void ServiceState_wPwm (ADC_HandleTypeDef *adc_ch, SftwPwm_t *statusLed) {
             break;
 
         case bd_off2on:
-            if (GRAB_BUTTON_STATE == GPIO_PIN_RESET) {
+            if ( BUTTON_RELEASED ) {
                 buttonState = bd_off;
             } else if ( TimerUp(&sftwTimer) ) {
                 buttonState = bd_on;
@@ -93,7 +95,7 @@ void ServiceState_wPwm (ADC_HandleTypeDef *adc_ch, SftwPwm_t *statusLed) {
             break;
 
         case bd_on:
-            if ( GRAB_BUTTON_STATE == GPIO_PIN_RESET ) {
+            if ( BUTTON_RELEASED ) {
                 sftwTimer.period = BUTTON_DB_ON_2_OFF_MS;
                 ResetTimer(&sftwTimer);
                 buttonState = bd_on2off;
@@ -101,7 +103,7 @@ void ServiceState_wPwm (ADC_HandleTypeDef *adc_ch, SftwPwm_t *statusLed) {
             break;
 
         case bd_on2off:
-            if (GRAB_BUTTON_STATE == GPIO_PIN_SET) {
+            if ( BUTTON_PRESSED ) {
                 buttonState = bd_on;
             } else if ( TimerUp(&sftwTimer) ) {
                 buttonState = bd_off;
