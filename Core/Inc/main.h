@@ -72,8 +72,6 @@ void Error_Handler(void);
 #define OSC_OUT_GPIO_Port GPIOF
 #define ADC_CH1_Pin GPIO_PIN_1
 #define ADC_CH1_GPIO_Port GPIOA
-#define ADC_CH2_Pin GPIO_PIN_4
-#define ADC_CH2_GPIO_Port GPIOA
 #define LD1_GREEN_Pin GPIO_PIN_5
 #define LD1_GREEN_GPIO_Port GPIOA
 #define SWDIO_Pin GPIO_PIN_13

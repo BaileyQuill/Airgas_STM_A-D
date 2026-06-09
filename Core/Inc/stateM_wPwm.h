@@ -27,9 +27,11 @@
 /** @brief Services the "with pwm" state machine
  * @param adc_ch pointer to the adc handler
  * @param statusLed pointer to the LED to flash when button is debounced
+ * @param pwm pointer to the pwm handler
+ * @param pwm_ch uint32_t timer channel for the pwm
  * @return void
  */
-void ServiceState_wPwm (ADC_HandleTypeDef *adc_ch, SftwPwm_t *statusLed);
+void ServiceState_wPwm (ADC_HandleTypeDef *adc_ch, SftwPwm_t *statusLed, TIM_HandleTypeDef *pwm, uint32_t pwm_ch);
 
 
 #endif /* CORE_INC_STATEM_WPWM_H_ */

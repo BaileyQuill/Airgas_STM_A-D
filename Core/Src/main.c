@@ -130,12 +130,16 @@ int main(void)
   SftwPwm_t testLed2 = SftwPwm(LD2_BLUE_GPIO_Port,  LD2_BLUE_Pin,  false);
   UpdateSftwPwm(&testLed2, (uint32_t) 2000);
   EnableSftwPwm(&testLed2);
+  htim2.Instance->ARR  = (12000000 / 100);
+  htim2.Instance->CCR4 = 0;//(12000000 / 100) / 2;
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
+//  HAL_ADC_Start(&hadc1);
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-      ServiceState_wPwm(&hadc1, &testLed1);
+      ServiceState_wPwm(&hadc1, &testLed1, &htim2, TIM_CHANNEL_4);
       ServiceSftwPwm(&testLed1);
       ServiceSftwPwm(&testLed2);
   }
@@ -210,7 +214,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.LowPowerAutoPowerOff = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.NbrOfConversion = 1;
-  hadc1.Init.DiscontinuousConvMode = DISABLE;
+  hadc1.Init.DiscontinuousConvMode = ENABLE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc1.Init.DMAContinuousRequests = DISABLE;
