@@ -21,8 +21,16 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+/* usually wrap the header include for the c file (ie wraping #include file.h with #def #undef in file.c)
+ * wasn't doing it for this, but it's very nice for things like this
+ * see config.h for more info
+ */
+#define CORE_INC_CONFIG_C_
 #include "config.h" /* project level configs like versioning etc */
+#undef  CORE_INC_CONFIG_C_
+
 #include "sftw_pwm.h"
+#include "stateM_wPwm.h"
 
 /* USER CODE END Includes */
 
@@ -117,19 +125,17 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  /* I set things up to just use gpio port/ pin with the Hal functions. didn't relize the built in LEDS were treated differently and only exposed their port/ pin in the .c file
-   * TODO: some slight issues with the gpio setup for the LEDS. They seem to start on and then aren't as bright when driven afterwards */
+  /* I set things up to just use gpio port/ pin with the Hal functions. didn't relize the built in LEDS were treated differently and only exposed their port/ pin in the .c file */
   SftwPwm_t testLed1 = SftwPwm(LD1_GREEN_GPIO_Port, LD1_GREEN_Pin, true);
   SftwPwm_t testLed2 = SftwPwm(LD2_BLUE_GPIO_Port,  LD2_BLUE_Pin,  false);
-  UpdateSftwPwm(&testLed1, (uint32_t) 1000);
   UpdateSftwPwm(&testLed2, (uint32_t) 2000);
-//  EnableSftwPwm(&testLed1);
-//  EnableSftwPwm(&testLed2);
+  EnableSftwPwm(&testLed2);
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+      ServiceState_wPwm(&hadc1, &testLed1);
       ServiceSftwPwm(&testLed1);
       ServiceSftwPwm(&testLed2);
   }

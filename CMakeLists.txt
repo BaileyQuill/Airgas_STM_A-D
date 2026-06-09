@@ -47,6 +47,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     Core/Src/sftw_pwm.c
     Core/Src/sftw_timer.c
+    Core/Src/stateM_wPwm.c
 )
 
 # Add include paths

@@ -15,9 +15,20 @@
 #ifndef CORE_INC_CONFIG_H_
 #define CORE_INC_CONFIG_H_
 
+#ifdef CORE_INC_CONFIG_C_
+#define _DECL
+#define _INIT(...) = __VA_ARGS__
+#else
+#define _DECL extern
+#define _INIT(...)
+#endif /* CORE_INC_CONFIG_C_ */
+
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h> /* uintx_t types */
 #include <stdbool.h> /* bools 'un-needed' but makes it a little easier to read */
+
+/* Non Hal Hardware configs */
+#define ANALOG_VOLTAGE_REFERENCE 3.3
 
 /* Versioning ----------------------------------------------------------------*/
 /* TODO: make build script/ cmake pass in version info bassed on tags/ branch name */
@@ -42,7 +53,7 @@
 #endif
 
 /* usefull for ensuring test builds/ unrealeased versions don't leave engineering */
-const uint8_t VARIANT_DEBUG_MASK = 0x80;
+#define VARIANT_DEBUG_MASK 0x80
 
 /* allows variant builds to both be easily identified and not require mutually exclusive ver# */
 typedef enum : uint8_t {
@@ -73,15 +84,16 @@ typedef struct {
 
 /* version info placed at head of build to make it easy to verify build info
  * leading 0xDEADBEEF for quick search, split words as build seems to be LSW (DEAD and BEEF were swapped in hexdump)*/
-volatile const uint16_t version_search_header_MSW __attribute__((section(".versioning"))) = 0xDEAD;
-volatile const uint16_t version_search_header_LSW __attribute__((section(".versioning"))) = 0xBEEF;
-volatile const Version_t VERSION_INFO __attribute__((section(".versioning"))) = {
-	/* build variant id bitwise or'd with the debug flag if BUILD_VER_DEBUG is non zero */ 
+_DECL volatile const uint16_t version_search_header_MSW __attribute__((section(".versioning"))) _INIT( 0xDEAD );
+_DECL volatile const uint16_t version_search_header_LSW __attribute__((section(".versioning"))) _INIT( 0xBEEF );
+_DECL volatile const Version_t VERSION_INFO __attribute__((section(".versioning")))             _INIT( {
+	/* build variant id bitwise or'd with the debug flag if BUILD_VER_DEBUG is non zero */
 	.variant = BUILD_VER_VARIANT | (BUILD_VER_DEBUG) ? VARIANT_DEBUG_MASK : 0x00,
 	.major   = BUILD_VER_MAJOR,
 	.minor   = BUILD_VER_MINOR,
 	.build   = BUILD_VER_BUILD
-};
+});
 
-
+#undef _DECL
+#undef _INIT
 #endif /* CORE_INC_CONFIG_H_ */
