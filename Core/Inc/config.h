@@ -41,7 +41,7 @@ typedef enum {
 /* Versioning ----------------------------------------------------------------*/
 /* TODO: make build script/ cmake pass in version info bassed on tags/ branch name */
 #ifndef BUILD_VER_DEBUG
-#define BUILD_VER_DEBUG   true
+#define BUILD_VER_DEBUG   false
 #endif
 
 #ifndef BUILD_VER_VARIANT
@@ -57,7 +57,7 @@ typedef enum {
 #endif
 
 #ifndef BUILD_VER_BUILD
-#define BUILD_VER_BUILD   1
+#define BUILD_VER_BUILD   2
 #endif
 
 /* usefull for ensuring test builds/ unrealeased versions don't leave engineering */
