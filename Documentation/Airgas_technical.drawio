@@ -67,7 +67,7 @@
             <mxPoint x="1" y="-10" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="FuMtZOdSv635-dJ4P_vv-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Tolerance&amp;nbsp;T = Max Service loop delta time" vertex="1">
+        <mxCell id="FuMtZOdSv635-dJ4P_vv-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="Tolerance&amp;nbsp;T ~= 1 ms&lt;div&gt;as thats the resolution of the software timer&lt;/div&gt;" vertex="1">
           <mxGeometry height="40" width="235" x="145" y="40" as="geometry" />
         </mxCell>
         <mxCell id="FuMtZOdSv635-dJ4P_vv-18" edge="1" parent="1" style="endArrow=classic;startArrow=classic;html=1;rounded=0;dashed=1;" value="">
