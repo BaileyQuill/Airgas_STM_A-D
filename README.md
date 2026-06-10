@@ -27,7 +27,7 @@ b.​ Blink the status LED to 10 Hz, when the B1 user switch is pressed more tha
 secs.  
 
 # 2. With Led State Machine
-![Airgas_technical-with led state machine_darkmode](./Documentation/Airgas_technical-with led state machine_darkmode.jpg)
+![Airgas_technical-with led state machine_darkmode](https://github.com/BaileyQuill/Airgas_STM_A-D/blob/main/Documentation/Airgas_technical-with%20led%20state%20machine_darkmode.jpg)
 
 # 3. With PWM State Machine
-![Airgas_technical-with PWM state machine(s)_darkmode](Documentation/Airgas_technical-with PWM state machine(s)_darkmode.jpg)
+![Airgas_technical-with PWM state machine(s)_darkmode](https://github.com/BaileyQuill/Airgas_STM_A-D/blob/main/Documentation/Airgas_technical-with%20PWM%20state%20machine(s)_darkmode.jpg)
