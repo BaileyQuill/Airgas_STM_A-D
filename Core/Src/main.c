@@ -134,6 +134,8 @@ int main(void)
   SftwPwm_t testLed2 = SftwPwm(LD2_BLUE_GPIO_Port,  LD2_BLUE_Pin,  false);
   UpdateSftwPwm(&testLed2, (uint32_t) 2000);
   EnableSftwPwm(&testLed2);
+
+  /* setup pwm pin to default 100hz at 0% duty */
   htim2.Instance->ARR  = (12000000 / 100);
   htim2.Instance->CCR4 = 0;//(12000000 / 100) / 2;
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
