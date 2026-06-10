@@ -45,7 +45,7 @@ typedef enum {
 #endif
 
 #ifndef BUILD_VER_VARIANT
-#define BUILD_VER_VARIANT variant_wled
+#define BUILD_VER_VARIANT variant_wpwm
 #endif
 
 #ifndef BUILD_VER_MAJOR
