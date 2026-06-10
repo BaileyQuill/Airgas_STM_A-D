@@ -113,9 +113,8 @@ void ServiceState_wPwm (SftwPwm_t *statusLed, TIM_HandleTypeDef *pwm, uint32_t p
     }
 
 
-    /* adcValue from 0/ground to vref*/
-    uint32_t adcValue = ADC_READINGS[ch_ledAdcIn];
-    uint32_t adcValue2 = ADC_READINGS[ch_pwmAdcIn];
+    /* adcValue from 0/ground to vref */
+    uint32_t adcValue = ADC_READINGS[ch_pwmAdcIn];
     switch (adcState) {
         default:
         /* shouldn't be here, get to a known safe state */
