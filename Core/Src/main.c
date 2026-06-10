@@ -31,6 +31,7 @@
 
 #include "sftw_pwm.h"
 #include "stateM_wPwm.h"
+#include "dmaAdc.h"
 
 /* USER CODE END Includes */
 
@@ -53,6 +54,7 @@
 
 COM_InitTypeDef BspCOMInit;
 ADC_HandleTypeDef hadc1;
+DMA_HandleTypeDef hdma_adc1;
 
 TIM_HandleTypeDef htim2;
 
@@ -63,6 +65,7 @@ TIM_HandleTypeDef htim2;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
@@ -103,6 +106,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC1_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
@@ -125,7 +129,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  /* I set things up to just use gpio port/ pin with the Hal functions. didn't relize the built in LEDS were treated differently and only exposed their port/ pin in the .c file */
+  /* I set things up to just use gpio port/ pin with the Hal functions. didn't realize the built in LEDS were treated differently and only exposed their port/ pin in the .c file */
   SftwPwm_t testLed1 = SftwPwm(LD1_GREEN_GPIO_Port, LD1_GREEN_Pin, true);
   SftwPwm_t testLed2 = SftwPwm(LD2_BLUE_GPIO_Port,  LD2_BLUE_Pin,  false);
   UpdateSftwPwm(&testLed2, (uint32_t) 2000);
@@ -133,13 +137,17 @@ int main(void)
   htim2.Instance->ARR  = (12000000 / 100);
   htim2.Instance->CCR4 = 0;//(12000000 / 100) / 2;
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
-//  HAL_ADC_Start(&hadc1);
+
+  /* setup adc dma channels */
+  DmaAdcStart(&hadc1);
+
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-      ServiceState_wPwm(&hadc1, &testLed1, &htim2, TIM_CHANNEL_4);
+//      HAL_ADC_Start_DMA(&hadc1, &ADC_READINGS[0], ADC_CHANNEL_COUNT);
+      ServiceState_wPwm(&testLed1, &htim2, TIM_CHANNEL_4);
       ServiceSftwPwm(&testLed1);
       ServiceSftwPwm(&testLed2);
   }
@@ -205,21 +213,21 @@ static void MX_ADC1_Init(void)
   /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV1;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV4;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.ScanConvMode = ADC_SCAN_SEQ_FIXED;
-  hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+  hadc1.Init.EOCSelection = ADC_EOC_SEQ_CONV;
   hadc1.Init.LowPowerAutoWait = DISABLE;
   hadc1.Init.LowPowerAutoPowerOff = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.NbrOfConversion = 1;
-  hadc1.Init.DiscontinuousConvMode = ENABLE;
+  hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.DMAContinuousRequests = ENABLE;
   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
-  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_1CYCLE_5;
+  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_12CYCLES_5;
   hadc1.Init.OversamplingMode = DISABLE;
   hadc1.Init.TriggerFrequencyMode = ADC_TRIGGER_FREQ_HIGH;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
@@ -305,6 +313,22 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 2 */
   HAL_TIM_MspPostInit(&htim2);
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 
 }
 

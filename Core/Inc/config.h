@@ -27,8 +27,16 @@
 #include <stdint.h> /* uintx_t types */
 #include <stdbool.h> /* bools 'un-needed' but makes it a little easier to read */
 
-/* Non Hal Hardware configs */
+/* Non Hal Hardware configs --------------------------------------------------*/
+
+/* adc Hardware configs ------------------------------------------------------*/
 #define ANALOG_VOLTAGE_REFERENCE 3.3
+#define ADC_CHANNEL_COUNT 2
+_DECL volatile uint32_t ADC_READINGS [ADC_CHANNEL_COUNT] _INIT({0});
+typedef enum {
+    ch_ledAdcIn = 0,
+    ch_pwmAdcIn = 1
+} ADC_CHANNELS;
 
 /* Versioning ----------------------------------------------------------------*/
 /* TODO: make build script/ cmake pass in version info bassed on tags/ branch name */
@@ -45,7 +53,7 @@
 #endif
 
 #ifndef BUILD_VER_MINOR
-#define BUILD_VER_MINOR   0
+#define BUILD_VER_MINOR   1
 #endif
 
 #ifndef BUILD_VER_BUILD
