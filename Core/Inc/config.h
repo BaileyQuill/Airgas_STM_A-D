@@ -45,7 +45,7 @@ typedef enum {
 #endif
 
 #ifndef BUILD_VER_VARIANT
-#define BUILD_VER_VARIANT variant_wpwm
+#define BUILD_VER_VARIANT variant_main
 #endif
 
 #ifndef BUILD_VER_MAJOR
@@ -53,11 +53,11 @@ typedef enum {
 #endif
 
 #ifndef BUILD_VER_MINOR
-#define BUILD_VER_MINOR   1
+#define BUILD_VER_MINOR   2
 #endif
 
 #ifndef BUILD_VER_BUILD
-#define BUILD_VER_BUILD   1
+#define BUILD_VER_BUILD   0
 #endif
 
 /* usefull for ensuring test builds/ unrealeased versions don't leave engineering */
