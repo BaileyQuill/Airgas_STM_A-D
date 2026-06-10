@@ -118,6 +118,7 @@ void ServiceState_wPwm (SftwPwm_t *statusLed, TIM_HandleTypeDef *pwm, uint32_t p
     switch (adcState) {
         default:
         /* shouldn't be here, get to a known safe state */
+            /* set pwm duty cycle to 0% */
             pwm->Instance->CCR4 = 0;
             adcState = ap_below_threshold;
         break;
@@ -125,16 +126,16 @@ void ServiceState_wPwm (SftwPwm_t *statusLed, TIM_HandleTypeDef *pwm, uint32_t p
         case ap_below_threshold:
             if (adcValue > PWM_STATE_L2H_THRESH) {
                 adcState = ap_above_threshold;
-                /* just passed threshold, startup pwm */
-                pwm->Instance->CCR4 = (12000000 / 100) / 2;
+                /* just passed threshold, set pwm duty cycle to 50% */
+                pwm->Instance->CCR4 = pwm->Instance->ARR * 0.5;
             }
             break;
 
         case ap_above_threshold:
             if (adcValue < PWM_STATE_H2L_THRESH) {
                 adcState = ap_below_threshold;
-                /* just passed threshold, shutdown pwm */
-                pwm->Instance->CCR4 = 0;//(12000000 / 100) / 2;
+                /* just passed threshold, set pwm duty cycle to 0% */
+                pwm->Instance->CCR4 = 0;
             }
             break;
         }
