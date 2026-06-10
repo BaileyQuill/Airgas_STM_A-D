@@ -133,7 +133,7 @@ int main(void)
   /* I set things up to just use gpio port/ pin with the Hal functions. didn't realize the built in LEDS were treated differently and only exposed their port/ pin in the .c file */
   SftwPwm_t testLed2 = SftwPwm(LD2_BLUE_GPIO_Port,  LD2_BLUE_Pin,  false);
   SftwPwm_t testLed1 = SftwPwm(LD1_GREEN_GPIO_Port, LD1_GREEN_Pin, true);
-  EnableSftwPwm(&testLed1);
+//  EnableSftwPwm(&testLed1);
 
 //  UpdateSftwPwm(&testLed2, (uint32_t) 2000);
 //  EnableSftwPwm(&testLed2);
@@ -153,7 +153,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-      ServiceState_wLed(&testLed1);
+//      ServiceState_wLed(&testLed1);
       ServiceState_wPwm(&testLed1, &htim2, TIM_CHANNEL_4);
       ServiceSftwPwm(&testLed1);
       ServiceSftwPwm(&testLed2);
