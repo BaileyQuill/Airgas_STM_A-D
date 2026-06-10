@@ -154,7 +154,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
       ServiceState_wLed(&testLed1);
-      ServiceState_wPwm(&testLed1, &htim2, TIM_CHANNEL_4);
+//      ServiceState_wPwm(&testLed1, &htim2, TIM_CHANNEL_4);
       ServiceSftwPwm(&testLed1);
       ServiceSftwPwm(&testLed2);
   }
