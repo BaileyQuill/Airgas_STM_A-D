@@ -30,8 +30,9 @@
 #undef  CORE_INC_CONFIG_C_
 
 #include "sftw_pwm.h"
-#include "stateM_wPwm.h"
 #include "dmaAdc.h"
+#include "stateM_wPwm.h"
+#include "stateM_wLed.h"
 
 /* USER CODE END Includes */
 
@@ -133,6 +134,7 @@ int main(void)
   SftwPwm_t testLed1 = SftwPwm(LD1_GREEN_GPIO_Port, LD1_GREEN_Pin, true);
   SftwPwm_t testLed2 = SftwPwm(LD2_BLUE_GPIO_Port,  LD2_BLUE_Pin,  false);
   UpdateSftwPwm(&testLed2, (uint32_t) 2000);
+  EnableSftwPwm(&testLed1);
   EnableSftwPwm(&testLed2);
 
   /* setup pwm pin to default 100hz at 0% duty */
@@ -148,8 +150,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//      HAL_ADC_Start_DMA(&hadc1, &ADC_READINGS[0], ADC_CHANNEL_COUNT);
-      ServiceState_wPwm(&testLed1, &htim2, TIM_CHANNEL_4);
+      ServiceState_wLed(&testLed1);
+//      ServiceState_wPwm(&testLed1, &htim2, TIM_CHANNEL_4);
       ServiceSftwPwm(&testLed1);
       ServiceSftwPwm(&testLed2);
   }
