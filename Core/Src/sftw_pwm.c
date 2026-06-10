@@ -81,7 +81,7 @@ void UpdateSftwPwm(SftwPwm_t *sftwPwm, uint32_t period){
  */
 void ServiceSftwPwm(SftwPwm_t *sftwPwm){
     if (TimerUp(&sftwPwm->timer)) {
-        sftwPwm->currentState = !sftwPwm->currentState;//(sftwPwm->currentState == GPIO_PIN_SET) ? GPIO_PIN_RESET : GPIO_PIN_SET;
+        sftwPwm->currentState = (sftwPwm->currentState == GPIO_PIN_SET) ? GPIO_PIN_RESET : GPIO_PIN_SET;
         HAL_GPIO_WritePin(sftwPwm->gpiox, sftwPwm->gpio_pin, sftwPwm->currentState);
     }
 };
