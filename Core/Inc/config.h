@@ -45,7 +45,7 @@ typedef enum {
 #endif
 
 #ifndef BUILD_VER_VARIANT
-#define BUILD_VER_VARIANT variant_main 
+#define BUILD_VER_VARIANT variant_wled
 #endif
 
 #ifndef BUILD_VER_MAJOR
@@ -78,8 +78,8 @@ typedef enum : uint8_t {
 	/*variant_   = 0x06,*/	
 	/*variant_   = 0x05,*/	
 	/*variant_   = 0x04,*/	
-	/*variant_   = 0x03,*/	
-	/*variant_   = 0x02,*/	
+	variant_wpwm = 0x03,
+	variant_wled = 0x02,
 	variant_main = 0x01	
 }Variants;
 
