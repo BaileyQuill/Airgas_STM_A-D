@@ -137,10 +137,10 @@ int main(void)
   EnableSftwPwm(&testLed1);
   EnableSftwPwm(&testLed2);
 
-  /* setup pwm pin to default 100hz at 0% duty */
-  htim2.Instance->ARR  = (12000000 / 100);
-  htim2.Instance->CCR4 = 0;//(12000000 / 100) / 2;
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
+//  /* setup pwm pin to default 100hz at 0% duty */
+//  htim2.Instance->ARR  = (12000000 / 100);
+//  htim2.Instance->CCR4 = 0;
+//  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
 
   /* setup adc dma channels */
   DmaAdcStart(&hadc1);
